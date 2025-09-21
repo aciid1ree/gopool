@@ -11,11 +11,9 @@ func Delay(attempt int, base, cap time.Duration, rnd *rand.Rand) time.Duration {
 	if attempt < 0 {
 		attempt = 0
 	}
-
 	if base <= 0 {
 		base = 1
 	}
-
 	if cap < base {
 		cap = base
 	}
@@ -44,19 +42,14 @@ func safeExpDoubling(base time.Duration, attempt int, cap time.Duration) time.Du
 
 	for i := 0; i < attempt; i++ {
 		if cur > cap/2 {
-			cur = cap
-			break
+			return cap
 		}
-
 		if cur > math.MaxInt64/2 {
-			cur = cap
-			break
+			return cap
 		}
-
-		cur += 2
+		cur *= 2
 		if cur >= cap {
-			cur = cap
-			break
+			return cap
 		}
 	}
 
